@@ -1,0 +1,247 @@
+<template>
+	<view class="container">
+		<headCommon></headcommon>
+		<view class="tr-nav">
+			<view class="tr-nav-view" v-for="(item,index) in goods_list" :key="index">
+				<view @click="tr_active(index)" :class="{'grows': item.isActive}" class="tr-nav-picker">{{item.title}}</view>
+			</view>
+		</view>
+		<view class="tr-coat" v-for="(item,index) in cont_list">
+			<view class="tr-cont">
+				<view class="tr-cont-top">
+					<view class="tr-seats">
+						单号：{{item.seats}}
+					</view>
+					<view class="tr-state">
+						<image :src=item.imgurl mode=""></image>
+					</view>
+				</view>
+				<view class="tr-city">
+					<view class="tr-city-left">
+						<view class="tr-city-text">
+							{{item.text}}
+						</view>
+						<view class="tr-val">
+							{{item.val}}
+						</view>
+					</view>
+					<view class="tr-city-img">
+						<image :src=item.imgurlaArr mode=""></image>
+					</view>
+					<view class="tr-city-right">
+						<view class="tr-city-text-one">
+							{{item.text_one}}
+						</view>
+						<view class="tr-val-one">
+							{{item.val_one}}
+						</view>
+					</view>
+				</view>
+				<view class="tr-square">
+					<view class="tr-square-left">
+						方数: {{item.square_text}}
+					</view>
+					<view class="tr-square-right">
+						发达时间: {{item.square_time}}
+					</view>
+				</view>
+				<view class="tr-press">
+					<button @click="pressBtn(ind)" v-for="(data,ind) in item.press" :key="ind" type="default">{{data}}</button>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script>
+	import headCommon from '../../common/head-common'
+	export default {
+		components: {headCommon},
+		data() {
+			return {
+				goods_list: [
+					{title: '全部运单',color: '0E2472',isActive: true},
+					{title: '待承接',color: '0E2472',isActive: false},
+					{title: '运输中',color: '0E2472',isActive: false},
+					{title: '已完结',color: '0E2472',isActive: false},
+				],
+				cont_list: [
+					{seats: '2393936956223',imgurl: '/static/img/undertaken.png',text: '无锡市',val: '无锡仓库',text_one: '上海市',
+					val_one: '上海经营部',imgurlaArr: '/static/img/arrow.png',square_text:'15立方',square_time:'2012-04-02',
+					press: ['指派司机','确认承接']},
+					{seats: '2393936956223',imgurl: '/static/img/delivery.png',text: '无锡市',val: '无锡仓库',text_one: '上海市',
+					val_one: '上海经营部',imgurlaArr: '/static/img/arrow.png',square_text:'15立方',square_time:'2012-04-02',
+					press: ['提醒发货']},
+					{seats: '2393936956223',imgurl: '/static/img/transit.png',text: '无锡市',val: '无锡仓库',text_one: '上海市',
+					val_one: '上海经营部',imgurlaArr: '/static/img/arrow.png',square_text:'15立方',square_time:'2012-04-02',
+					press: ['运输跟进']},
+				],
+			}
+		},
+		methods: {
+			tr_active(index){
+				for (let i=0;i<this.goods_list.length;i++){
+					this.goods_list[i].isActive = false
+				}
+				this.goods_list[index].isActive = true
+			},
+			pressBtn(ind){
+				console.log("---指派司机",ind)
+				let that = this;
+				uni.request({
+				    url: '', 
+				    data: {
+				        // text: 'uni.request'
+						username: '',
+						password: ''
+				    },
+					method: 'post',
+				    header: {
+				        // 'custom-header': 'hello' ,
+						'content-type': 'application/json'
+				    },
+				    success: (res) => {
+				        // console.log('---res',res.data);
+				        // this.text = 'request success';
+						sessionStorage.setItem('token',res.data.user_info.token)
+				    }
+				});
+				uni.navigateTo({
+				    url: ''
+				});
+			}
+		}
+	}
+</script>
+
+<style scoped>
+	.container {
+		
+	}
+	.tr-nav{
+		width: 100%;
+		height: 40px;
+	}
+	.tr-nav-view{
+		
+	}
+	.tr-nav-picker{
+		width: 70px;
+		height: 40px;
+		float: left;
+		font-size: 14px;
+		text-align: center;
+		line-height: 40px;
+		margin-left: 19px;
+	}
+	.grows{
+		color: #0E2472;
+		border-bottom: 2px solid #0E2472;
+	}
+	.tr-coat{
+		width: 100%;
+		height: 200px;
+		padding: 15px 0 0 15px;
+		box-sizing: border-box;
+		background: #F2F2F2;
+	}
+	.tr-cont{
+		width: 95%;
+		height: 180px;
+		border-radius: 7px;
+		background: white;
+	}
+	.tr-cont-top{
+		width: 100%;
+		height: 35px;
+	}
+	.tr-seats{
+		width: 190px;
+		height: 35px;
+		float: left;
+		color: #B7C1D7;
+		line-height: 35px;
+		text-indent: 15px;
+	}
+	.tr-state{
+		float: right;
+	}
+	.tr-state image{
+		width: 70px;
+		height: 35px;
+	}
+	.tr-city{
+		width: 100%;
+		height: 55px;
+	}
+	.tr-city-left{
+		width: 110px;
+		height: 55px;
+		float: left;
+		text-indent: 30px;
+	}
+	.tr-city-text,.tr-city-text-one{
+		height: 30px;
+		font-weight: bold;
+		font-size: 14px;
+		line-height: 30px;
+	}
+	.tr-val,.tr-val-one{
+		height: 15px;
+		line-height: 15px;
+		color: #B7C1D7;
+		font-size: 14px;
+	}
+	.tr-city-img{
+		width: 130px;
+		height: 55px;
+		float: left;
+	}
+	.tr-city-img image{
+		width: 100px;
+		height: 55px;
+	}
+	.tr-city-right{
+		width: 100px;
+		height: 55px;
+		float: right;
+		text-align: right;
+		padding-right: 25px;
+		box-sizing: border-box;
+	}
+	.tr-square{
+		width: 100%;
+		height: 35px;
+		font-size: 14px;
+		padding: 0px 0 0 15px;
+		box-sizing: border-box;
+		border-bottom: 1px solid #B7C1D7;
+	}
+	.tr-square-left{
+		width: 160px;
+		height: 35px;
+		line-height: 30px;
+		float: left;
+	}
+	.tr-square-right{
+		height: 35px;
+		line-height: 20px;
+		float: left;
+	}
+	.tr-press{
+		width: 100%;
+		height: 53px;
+		text-align: right;
+		padding: 8px 15px 0 0;
+		box-sizing: border-box;
+	}
+	.tr-press button{
+		width: 100px;
+		height: 38px;
+		font-size: 14px;
+		border-radius: 20px;
+		border: 1px solid #ACACAC;
+		display: inline-block;
+		margin-left: 15px;
+	}
+</style>

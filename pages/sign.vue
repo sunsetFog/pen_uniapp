@@ -1,0 +1,229 @@
+<template>
+	<view class="container">
+		<view class="lu-top">
+			<image src="/static/img/top.png" mode=""></image>
+		</view>
+		<view class="lu-conten">
+			<view class="coat">
+				<view @click="btnleft" :class="{'grows':isActive}" class="lu-left">
+					承运商
+				</view>
+				<view @click="btnright"  :class="{'cssObject':active}" class=" lu-right">
+					司机
+				</view>
+			</view>
+			<view class="rg-pag" v-show="isActive">
+				<view class="rg-pag-loose">
+					<image  class="pag-imginp" src="/static/img/person.png"></image>
+					<input ref="inp" @click="inpShow" v-model="user" type="text" class="inp" value="" placeholder="请输入手机号码或者用户名"/>
+				</view>
+				<view class="rg-pag-coat">
+					<image class="pag-imgbtn" src="/static/img/lock.png"></image>
+					<input @click="btnShow" v-model="pass" type="password" class="btn" value="" placeholder="请输入密码登录"/>
+					<view class="btnError" v-show="btnError">
+						{{list}}
+					</view>
+				</view>
+			</view>
+			<view class="rg-driver" v-show="active">
+				<view class="rg-pag-loose">
+					<image class="pag-imginp" src="/static/img/person.png"></image>
+					<input v-model="user" @click="dirinpShow" type="text" class="inp" value="" placeholder="请输入手机号码或者用户名"/>
+				</view>
+				<view class="rg-pag-coat">
+					<image  class="pag-imgbtn" src="/static/img/lock.png"></image>
+					<input v-model="pass" type="password" class="btn" value="" placeholder="请输入密码登录"/>
+					<view class="inpError" @click="dirbtnShow" v-show="inpErrorCoat">
+						{{list}}
+					</view>
+				</view>
+			</view>
+		</view>
+		<view class="footer">
+			<!-- <el-button type="info">67776</el-button> -->
+			<button @click="signBtn" class="footer-btn" type="default">登录</button>
+		</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				isActive: true,
+				active: false,
+				list: '您的输入有误，请重新输入 !',
+				btnError: false,
+				inpErrorCoat: false,
+				user: '',
+				pass: '',
+				companyName: 'xxll'
+			}
+		},
+		methods: {
+			btnleft(){
+				this.isActive = true
+				if(this.isActive = true){
+					this.active = false
+				}
+			},
+			btnright(){
+				this.active = true
+				if(this.active = true){
+					this.isActive = false
+				}
+			},
+			inpShow(){
+				this.btnError = false
+				this.inpErrorCoat = false
+			},
+			btnShow(){
+				this.btnError = false
+				this.inpErrorCoat = false
+			},
+			dirinpShow(){
+				this.btnError = false
+				this.inpErrorCoat = false
+			},
+			dirbtnShow(){
+				this.btnError = false
+				this.inpErrorCoat = false
+			},
+			signBtn(){
+				let that = this
+				uni.request({
+				    url: 'http://xxll.5mall.com/login/submit_uni.jhtml', 
+				    data: {
+						username: that.user,
+						password: that.pass,
+						companyName: 'xxll'
+				    },
+					method: 'post',
+				    header: {
+						 'content-type': 'application/x-www-form-urlencoded',
+						 'Access-Control-Allow-Origin': '*'
+				    },
+				    success: (res) => {
+						console.log("--res",res)
+						let stat = res.data.stat
+						if (stat == 1) {
+							console.log('登录成功')
+							let token = res.data.data.token
+							sessionStorage.setItem('token',res.data.data.token)
+							that.$store.commit('userAi',res.data.data.token)
+							console.log("---store",that.$store)
+							uni.switchTab({
+								// url: '/pages/logistics/assign_driver/carrier?username='+that.user'&password='+that.pass'&token='+that.token
+							    url: '/pages/logistics/assign_driver/carrier?username=that.user'
+							});
+						}else{
+							that.btnError = true
+							that.inpErrorCoat = true
+						}
+				    }
+				});
+				
+				
+			}
+			
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	.container {
+		
+	}
+	.lu-top{
+		width: 100%;
+		height: 150px;
+	}
+	.lu-top image{
+		width: 100%;
+		height: 100%;
+	}
+	.lu-conten{
+		width: 100%;
+		height: 50px;
+		padding: 0px 20px 0 20px;
+		box-sizing: border-box;
+	}
+	.coat{
+		width: 100%;
+		height: 52px;
+		display: flex;
+		justify-content: space-between;
+	}
+	.lu-left{
+		width: 25%;
+		height: 50px;
+		float: left;
+		margin-left: 55px;
+		text-align: center;
+	}
+	.grows,.cssObject{
+		color: #007AFF;
+		border-bottom: 3px solid #007AFF;
+	}
+	.lu-right{
+		margin-right: 55px;
+		width: 25%;
+		height: 50px;
+		float: left;
+		text-align: center;
+	}
+	.rg-pag,.rg-driver{
+		// position: relative;
+	}
+	.rg-pag-loose,.rg-pag-coat{
+		position: relative;
+	}
+	.pag-imginp{
+		width: 37px;
+		height: 37px;
+		position: absolute;
+		top: 9px;
+		left: 0px;
+	}
+	.pag-imgbtn{
+		width: 37px;
+		height: 37px;
+		position: absolute;
+		top: 5px;
+		left: 0px;
+	}
+	.inp{
+		width: 100%;
+		height: 50px;
+		text-indent: 37px;
+		border-top: 1px solid grey;
+		border-bottom: 1px solid grey;
+	}
+	.btn{
+		width: 100%;
+		height: 50px;
+		text-indent: 37px;
+		border-bottom: 1px solid grey;
+	}
+	.inpError,.btnError{
+		width: 100%;
+		height: 50px;
+		line-height: 50px;
+		text-indent: 38px;
+		font-size: 14px;
+		color: red;
+		// border-bottom: 1px solid grey;
+	}
+	.footer{
+		width: 100%;
+		height: 50px;
+		margin-top: 200px;
+	}
+	.footer-btn{
+		width: 250px;
+		height: 50px;
+		color: white;
+		background: #007AFF;
+		border-radius: 30px;
+	}
+</style>

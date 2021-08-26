@@ -1,0 +1,77 @@
+<template>
+	<view class="transport">
+		<arr-com :newCom="design"></arr-com>
+		<view class="transportMap">
+			<map style="width: 100%; height: 220px;" :latitude="latitude" :longitude="longitude" :markers="covers">
+			</map>
+		</view>
+		<!-- <view class="tr-coat" v-for="(item,index) in dataList">
+			<view class="tr-cont">
+				<view class="tr-cont-top">
+					<view class="tr-seats">
+						单号：{{item.sn}}
+					</view>
+					<view class="tr-state">
+						<image :src=item.imgurl mode=""></image>
+					</view>
+				</view>
+				<view class="tr-city">
+					<view class="tr-city-left">
+						<view class="tr-city-text">
+							{{item.warehouse_area}}
+						</view>
+						<view class="tr-val">
+							{{item.warehouse_name}}
+						</view>
+					</view>
+					<view class="tr-city-img">
+						<image src="/static/img/arrow.png" mode=""></image>
+					</view>
+					<view class="tr-city-right">
+						<view class="tr-city-text-one">
+							{{item.delivery_area}}
+						</view>
+						<view class="tr-val-one">
+							
+						</view>
+					</view>
+				</view>
+		</view> -->
+	</view>
+</template>
+
+<script>
+	import arrCom from '../../../common/arrow/arrow'
+	export default {
+		components: {arrCom},
+		data () {
+			return {
+				design: '运输跟进',
+				id:0, // 使用 marker点击事件 需要填写id
+				title: 'map',
+				latitude: 39.909,
+				longitude: 116.39742,
+				covers: [{
+					latitude: 39.909,
+					longitude: 116.39742,
+					// iconPath: '../../../static/location.png'
+				}, {
+					latitude: 39.90,
+					longitude: 116.39,
+					// iconPath: '../../../static/location.png'
+				}],
+			
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+.transport{
+	.transportMap{
+		width: 100%;
+		height: 220px;
+	}
+		
+}
+</style>

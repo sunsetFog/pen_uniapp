@@ -1,0 +1,101 @@
+{
+	"pages": [{
+		"path": "pages/logistics/assign_driver/carrier",
+		"style": {
+			"navigationBarTitleText": ""
+		}
+	},
+	{
+		"path": "pages/logistics/assign_driver/assign",
+		"style": {
+			"navigationBarTitleText": ""
+		}
+	}
+	    ,{
+	        "path" : "pages/logistics/assign_driver/transport",
+	        "style" :                                                                                    
+	        {
+	            "navigationBarTitleText": "",
+	            "enablePullDownRefresh": false
+	        }
+	        
+	    }
+		,{
+            "path" : "pages/logistics/maintain_driver/maintain",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/logistics/maintain_driver/user",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/logistics/maintain_driver/newAdded",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/sign",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		}
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		// "usingComponents": {
+		// 	"el-button": "/wxcomponents/element-ui/button/index"
+		// },
+		"app-plus": {
+			"background": "#efeff4",
+			"titleNView": false,
+			"animationType": "slide-in-bottom"
+		}
+	},
+	// "easycom": {
+	//     "autoscan": true, //是否自动扫描组件
+	//     "custom": {//自定义扫描规则
+	//       "^el-(.*)": "@/wxcomponents/element-ui/packages/$1/index.js"
+	//     }
+	// },
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#4C73FF",
+		"borderStyle": "black",
+		"backgroundColor": "#FFFFFF",
+		"height": "50px",
+		"fontSize": "10px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"list": [{
+			"pagePath": "pages/logistics/assign_driver/carrier",
+			"iconPath": "static/img/home.png",
+			"selectedIconPath": "static/img/home-active.png",
+			"text": "主页"
+		}, {
+			"pagePath": "pages/logistics/maintain_driver/user",
+			"iconPath": "static/img/user.png",
+			"selectedIconPath": "static/img/user-active.png",
+			"text": "我的"
+		}]
+	}
+}

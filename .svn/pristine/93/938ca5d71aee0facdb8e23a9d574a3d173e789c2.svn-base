@@ -1,0 +1,183 @@
+<template>
+	<view id="newAdded">
+		<new-com :newCom='newComData'></new-com>
+		<view class="infor">
+			<view class="infor-left">头像</view>
+			<view class="infor-right">
+				<view class="portrait" @click="inforbtn">
+					<image :src='dataImg' mode=""></image>
+					<!-- <input type="file" value="" /> -->
+				</view>
+				<image class="zuoji" src="/static/img/zuoji.png" mode=""></image>
+			</view>
+		</view>
+		<view class="full">
+			<view class="full-left">姓名</view>
+			<view class="full-right">
+				<input type="text" value="" placeholder="请输入姓名"/>
+			</view>
+		</view>
+		<view class="phone">
+			<view class="phone-left">电话</view>
+			<view class="phone-right">
+				<input type="text" value="" placeholder="请输入电话号码"/>
+			</view>
+		</view>
+		<view class="card">
+			<view class="card-left">身份证号码</view>
+			<view class="card-right">
+				<input type="text" value="" placeholder="请输入身份证号码"/>
+			</view>
+		</view>
+		<view class="plate">
+			<view class="plate-left">车牌</view>
+			<view class="plate-right">
+				<input type="text" value="" placeholder="请输入车牌号"/>
+			</view>
+		</view>
+		<view class="footer">
+			<button @click="footerBtn" type="default">确定</button>
+		</view>
+	</view>
+</template>
+
+<script>
+	import newCom from '../../../common/arrow/arrow'
+	export default {
+		components: {newCom},
+		data() {
+			return {
+				newComData: '新增',
+				dataImg: '',
+				inforImg: ''
+			}
+		},
+		methods: {
+			inforbtn(){
+				let that = this;
+				uni.chooseImage({
+				    count: 6, //默认9
+				    sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+				    sourceType: ['album'], //从相册选择
+				    success: function (res) {
+						console.log("---res",res)
+						uni.getImageInfo({
+							src: res.tempFilePaths[0],
+							success: function (image) {
+								console.log(image.width);
+								console.log(image.height);
+								console.log('image----',image)
+								that.dataImg = image.path
+							}
+						});
+						// 预览图片
+						// uni.previewImage({
+						//     urls: res.tempFilePaths,
+						//     longPressActions: {
+						//         itemList: ['发送给朋友', '保存图片', '收藏'],
+						//         success: function(data) {
+						// 			// console.log("---dataImg",data)
+						//             // console.log('选中了第' + (data.tapIndex + 1) + '个按钮,第' + (data.index + 1) + '张图片');
+						//         },
+						//         fail: function(err) {
+						//             console.log(err.errMsg);
+						//         }
+						//     }
+						// });
+						
+						
+						// console.log('---img',res.tempFiles[0].name)
+						// this.inforImg = "/static/img/" + res.tempFiles[0].name
+						// console.log("---url",this.inforImg)
+						// console.log("---url",res.tempFilePaths)
+				        // console.log(JSON.stringify(res.tempFilePaths));
+				    }
+				});
+			}
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	#newAdded{
+		.infor{
+			width: 100%;
+			height: 58px;
+			line-height: 58px;
+			border-bottom: 1px solid #F3F3F3;
+			.infor-left{
+				width: 130px;
+				height: 58px;
+				float: left;
+				text-indent: 20px;
+				font-size: 15px;
+			}
+			.infor-right{
+				width: 150px;
+				height: 58px;
+				float: right;
+				position: relative;
+				.portrait{
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					background: #F1F1F2;
+					position: absolute;
+					top: 9px;
+					right: 30px;
+					image{
+						width: 40px;
+						height: 40px;
+					}
+				}
+				.zuoji{
+					width: 12px;
+					height: 12px;
+					position: absolute;
+					top: 24px;
+					right: 10px;
+				}
+			}
+		}
+		.full,.phone,.card,.plate{
+			width: 100%;
+			height: 58px;
+			line-height: 58px;
+			border-bottom: 1px solid #F3F3F3;
+			.full-left,.phone-left,.card-left,.plate-left{
+				width: 130px;
+				height: 58px;
+				float: left;
+				text-indent: 20px;
+				font-size: 15px;
+			}
+			.full-right,.phone-right,.card-right,.plate-right{
+				width: 220px;
+				height: 58px;
+				float: right;
+				text-align: right;
+				padding: 0 17px 0 0;
+				input{
+					width: 220px;
+					height: 58px;
+					line-height: 58px;
+				}
+			}
+		}
+		.footer{
+			width: 100%;
+			height: 40px;
+			position: fixed;
+			bottom: 50px;
+			left: 0;
+			button{
+				width: 90%;
+				height: 40px;
+				color: white;
+				font-size: 15px;
+				background: #4C73FF;
+			}
+		}	
+	}
+	
+</style>
